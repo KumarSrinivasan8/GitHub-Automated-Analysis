@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Automated Analysis</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      color: #333;
+    }
+    #output {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Automated Analysis</h1>
+
+  <p>Enter the GitHub username:</p>
+  <input type="text" id="username" placeholder="Enter GitHub username">
+  <button onclick="fetchData()">Analyze</button>
+
+  <div id="output"></div>
+
+  <script>
+    function fetchData() {
+      const username = document.getElementById('username').value;
+      fetch(`https://api.github.com/users/${username}/repos`)
+        .then(response => response.json())
+        .then(data => {
+          // Process the data and find the most technically challenging repository
+          const mostChallengingRepo = findMostChallengingRepo(data);
+          displayResult(mostChallengingRepo);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          displayError('An error occurred. Please try again.');
+        });
+    }
+
+    function findMostChallengingRepo(repos) {
+      // Perform analysis on the repositories to determine the most challenging one
+      // Replace this code with your actual analysis logic
+      return repos[0]; // Returning the first repository as an example
+    }
+
+    function displayResult(repo) {
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `
+        <h3>Most Challenging Repository:</h3>
+        <p><strong>Name:</strong> ${repo.name}</p>
+        <p><strong>Description:</strong> ${repo.description}</p>
+      `;
+    }
+
+    function displayError(message) {
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = `<p class="error">${message}</p>`;
+    }
+  </script>
+</body>
+</html>
